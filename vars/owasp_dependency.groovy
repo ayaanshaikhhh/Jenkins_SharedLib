@@ -3,7 +3,13 @@ def call() {
     dependencyCheck(
         odcInstallation: 'OWASP',
         nvdCredentialsId: 'nvd-api-key',
-        additionalArguments: '--scan ./ --disableNodeAudit'
+        additionalArguments: '''
+            --scan ./
+            --data /var/lib/jenkins/.dependency-check-data
+            --nvdApiDelay 6000
+            --nvdMaxRetryCount 20
+            --disableNodeAudit
+        '''.stripIndent().trim()
     )
 
     dependencyCheckPublisher(
