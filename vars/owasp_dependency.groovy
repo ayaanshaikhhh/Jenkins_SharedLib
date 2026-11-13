@@ -1,12 +1,10 @@
+
 def call() {
-    withCredentials([
-        string(credentialsId: 'nvd-api-key', variable: 'NVD_API_KEY')
-    ]) {
-        dependencyCheck(
-            additionalArguments: "--scan ./ --nvdApiKey ${NVD_API_KEY}",
-            odcInstallation: 'OWASP'
-        )
-    }
+    dependencyCheck(
+        odcInstallation: 'OWASP',
+        nvdCredentialsId: 'nvd-api-key',
+        additionalArguments: '--scan ./ --disableNodeAudit'
+    )
 
     dependencyCheckPublisher(
         pattern: '**/dependency-check-report.xml'
